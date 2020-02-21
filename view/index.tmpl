@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gin Hello</title>
+    <script>
+        var ws = new WebSocket("ws://localhost:8080/ping");  
+        // onOpen被觸發時, 去嘗試連線 
+        ws.onopen = function(evt) {  
+            console.log("Connection open ...");  
+            ws.send("Hello WebSockets!");  
+        };  
+        // onMessage被觸發時, 來接收ws server傳來的訊息  
+        ws.onmessage = function(evt) {  
+            console.log("Received Message: " + evt.data);  
+        };  
+        // 由ws server發出的onClose事件  
+        ws.onclose = function(evt) {  
+            console.log("Connection closed.");  
+        };  
+        // 每秒發出一個現在時間的訊息
+        var timeInterval = setInterval(() => ws.send(Date.now()), 1000)
+</script>
+</head>
+<body>
+<h1>Hi {{.title}}</h1>
+</body>
+</html>
